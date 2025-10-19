@@ -1,0 +1,13 @@
+com/marketplace/ShopDemo.java
+com/marketplace/product/PhysicalProduct.java
+com/marketplace/product/shipping/Shippable.java
+com/marketplace/product/Product.java
+com/marketplace/product/tax/TaxPolicy.java
+com/marketplace/product/tax/FlatVat.java
+com/marketplace/product/tax/NoTax.java
+com/marketplace/product/DigitalProduct.java
+com/marketplace/product/pricing/PercentagePromotion.java
+com/marketplace/product/pricing/Promotion.java
+com/marketplace/product/pricing/BogoHalfPromotion.java
+com/marketplace/product/pricing/FixedPromotion.java
+com/marketplace/product/pricing/PricePolicy.java
