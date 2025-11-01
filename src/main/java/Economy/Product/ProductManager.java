@@ -40,11 +40,19 @@ public class ProductManager {
 
             // Show available categories
             showCategories();
-            System.out.print("Category ID (or 0 to create new): ");
-            int categoryId = Integer.parseInt(scanner.nextLine());
+            int categoryId;
+            while (true) {
+                System.out.print("Category ID (or 0 to create new): ");
+                categoryId = Integer.parseInt(scanner.nextLine());
 
-            if (categoryId == 0) {
-                categoryId = createCategory();
+                if (categoryId == 0) {
+                    categoryId = createCategory();
+                    break;
+                } else if (categoryExists(categoryId)) {
+                    break;
+                } else {
+                    System.out.println("❌ Invalid category ID. Please try again.");
+                }
             }
 
             // Insert into DB
@@ -113,11 +121,19 @@ public class ProductManager {
 
             // Show available categories
             showCategories();
-            System.out.print("Category ID (or 0 to create new): ");
-            int categoryId = Integer.parseInt(scanner.nextLine());
+            int categoryId;
+            while (true) {
+                System.out.print("Category ID (or 0 to create new): ");
+                categoryId = Integer.parseInt(scanner.nextLine());
 
-            if (categoryId == 0) {
-                categoryId = createCategory();
+                if (categoryId == 0) {
+                    categoryId = createCategory();
+                    break;
+                } else if (categoryExists(categoryId)) {
+                    break;
+                } else {
+                    System.out.println("❌ Invalid category ID. Please try again.");
+                }
             }
 
             // Insert into DB
@@ -483,5 +499,21 @@ public class ProductManager {
     private String truncate(String str, int length) {
         if (str == null) return "";
         return str.length() > length ? str.substring(0, length - 3) + "..." : str;
+    }
+
+    private boolean categoryExists(int categoryId) {
+        try {
+            String sql = "SELECT id FROM categories WHERE id = ?";
+            PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql);
+            pstmt.setInt(1, categoryId);
+            ResultSet rs = pstmt.executeQuery();
+            boolean exists = rs.next();
+            rs.close();
+            pstmt.close();
+            return exists;
+        } catch (SQLException e) {
+            System.err.println("❌ Error checking category: " + e.getMessage());
+            return false;
+        }
     }
 }
